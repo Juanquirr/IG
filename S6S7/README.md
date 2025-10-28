@@ -7,7 +7,7 @@
 ## Descripción
 
 Este proyecto es una simulación interactiva del Sistema Solar desarrollada con **Three.js**, una biblioteca de JavaScript para crear gráficos 3D en el navegador. El sistema incluye el Sol, seis planetas principales (Mercurio, Venus, Tierra, Marte, Júpiter y Saturno), tres lunas orbitales, una nave espacial y efectos visuales espaciales como estrellas y cometas. 
-**Disclaimer**: no se pretende representar el Sistema Solar tal cual es.
+**Disclaimer**: no se pretende representar el Sistema Solar tal cual es. Puede verse un vídeo demostración haciendo click [aquí](https://youtu.be/dPjmjqterL0).
 
 ## Características Principales
 
@@ -225,6 +225,6 @@ Este proyecto ha sido optimizado mediante asistencia de IA para:
 ***
 
 **Nota**: Este README documenta las características principales del sistema solar interactivo. Para detalles técnicos específicos, consulta los comentarios en el código fuente.
-Desarrollado como proyecto educativo de Three.js, con asistencia de IA (Perplexity AI) para optimización y refactorización de código.
+Desarrollado como proyecto educativo de Three.js, con asistencia de IA (Perplexity AI) para optimización y refactorización de código. El código fue desarrollado en español por falta de tiempo y facilidad.
 
 
