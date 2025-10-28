@@ -1,18 +1,23 @@
-# 🌌 Sistema Solar Interactivo con Three.js
+# Sistema Solar Interactivo con Three.js
+
+## Autor
+
+- Juan Carlos Rodríguez Ramírez
 
 ## Descripción
 
-Este proyecto es una simulación interactiva del Sistema Solar desarrollada con **Three.js**, una biblioteca de JavaScript para crear gráficos 3D en el navegador. El sistema incluye el Sol, seis planetas principales (Mercurio, Venus, Tierra, Marte, Júpiter y Saturno), tres lunas orbitales, una nave espacial explorable y efectos visuales espaciales como estrellas y cometas.
+Este proyecto es una simulación interactiva del Sistema Solar desarrollada con **Three.js**, una biblioteca de JavaScript para crear gráficos 3D en el navegador. El sistema incluye el Sol, seis planetas principales (Mercurio, Venus, Tierra, Marte, Júpiter y Saturno), tres lunas orbitales, una nave espacial y efectos visuales espaciales como estrellas y cometas. 
+**Disclaimer**: no se pretende representar el Sistema Solar tal cual es.
 
-## ✨ Características Principales
+## Características Principales
 
-### 🪐 Creación de Planetas y sus Lunas
+### Creación de Planetas y sus Lunas
 
 El sistema implementa un enfoque modular para la creación de cuerpos celestes:
 
 #### Planetas
 - **Configuración centralizada**: Los datos de todos los planetas (radio, distancia orbital, velocidad, color y textura) están almacenados en el objeto `CONFIG.planetasData`
-- **Geometría esférica**: Cada planeta utiliza `THREE.SphereGeometry` con 32 segmentos para suavidad visual
+- **Geometría esférica**: Cada planeta utiliza `THREE.SphereGeometry` con 32 segmentos para suavidad visual (con más, afectaría al rendimiento)
 - **Materiales realistas**: Se aplica `MeshPhongMaterial` para permitir interacción con la iluminación
 - **Órbitas elípticas**: Las órbitas se dibujan con `LineBasicMaterial` y se calculan matemáticamente usando coseno y seno
 - **Rotación propia**: Cada planeta rota sobre su eje Y para simular su día planetario
@@ -26,7 +31,7 @@ El sistema implementa un enfoque modular para la creación de cuerpos celestes:
 - **Ángulos de inclinación**: Configurables mediante el parámetro `angle` en `CONFIG.lunasData`
 - **Tres lunas implementadas**: Vinculadas a los planetas Tierra, Marte y Júpiter
 
-### 🎥 Sistema de Vistas Múltiples
+### Sistema de Vistas Múltiples
 
 El proyecto implementa tres tipos de cámara con controles únicos:
 
@@ -41,15 +46,15 @@ El proyecto implementa tres tipos de cámara con controles únicos:
 - **Controles**: `OrbitControls` con target que se mueve con el planeta
 - **Posicionamiento**: La cámara se sitúa a una distancia proporcional al radio del planeta (4x)
 - **Offset**: Elevación de 0.5x la distancia para mejor perspectiva
-- **Funcionalidad**: Permite hacer zoom y rotar alrededor del planeta mientras este orbita
+- **Funcionalidad**: Permite hacer zoom y rotar alrededor del planeta mientras este orbita, dando la sensación de cámara con autoapuntado
 
 #### Vista de Nave (Tecla V)
 - **Cámara en tercera persona**: FOV 75° para mayor inmersión
 - **Posición relativa**: Offset (0, 2, -5) respecto a la orientación de la nave
-- **LookAt dinámico**: La cámara mira hacia adelante de la nave usando quaternions
+- **LookAt dinámico**: La cámara mira hacia adelante de la nave usando quaternions. Así, la cámara siempre mira en la dirección de la nave 
 - **Sin controles manuales**: La vista sigue automáticamente a la nave
 
-### 🎨 Uso de Texturas
+### Uso de Texturas
 
 El proyecto utiliza texturas realistas para todos los cuerpos celestes:
 
@@ -64,16 +69,16 @@ map: loader.load(`src/${p.texture}`)
 - **Mercurio**: `mercurymap.jpg` - Superficie craterizada
 - **Venus**: `venusmap.jpg` - Atmósfera densa amarillenta
 - **Tierra**: `earthmap1k.jpg` - Continentes y océanos
-- **Marte**: `mars_1k_color.jpg` - Superficie rojiza
-- **Júpiter**: `jupiter2_2k.jpg` - Bandas atmosféricas características
-- **Saturno**: `saturnringcolor.jpg` - Superficie con anillos
+- **Marte**: `mars_1k_color.jpg` - Superficie rojiza propia de Marte
+- **Júpiter**: `jupiter2_2k.jpg` - Vista de Cassini en 2k
+- **Saturno**: `saturnringcolor.jpg` - Superficie con anillos en color específico
 - **Lunas**: `moonmap1k.jpg` - Textura compartida para todas las lunas
 
 #### Optimización
 - **Carga única**: Las texturas se cargan una sola vez y se reutilizan cuando es posible (ej: todas las lunas usan la misma textura)
 - **Resolución apropiada**: Texturas 1k-2k para balance entre calidad y rendimiento
 
-### 🌟 Decoración del Sistema
+### Decoración del Sistema
 
 #### Campo de Estrellas
 - **Cantidad**: 5000 partículas distribuidas aleatoriamente
@@ -99,21 +104,13 @@ map: loader.load(`src/${p.texture}`)
 - **Iluminación**: `PointLight` frontal para simular luces de navegación
 - **Órbita**: Circular a 70 unidades del Sol con altura constante
 
-### 📐 Plano Horizontal
-
-El sistema solar está orientado en el plano XZ (horizontal):
-- **Posiciones planetarias**: Utilizan `position.x` y `position.z` (no `position.y`)
-- **Órbitas visuales**: Círculos dibujados en Y=0
-- **Ventaja**: Permite vista cenital natural del sistema, como en representaciones astronómicas reales
-
-## 🔧 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Three.js**: Biblioteca principal para renderizado 3D (WebGL)
-- **OrbitControls**: Control de cámara interactivo
 - **JavaScript ES6+**: Sintaxis moderna con módulos
 - **HTML5 Canvas**: Elemento de renderizado
 
-## 📦 Estructura del Código
+## Estructura del Código
 
 ### Organización Modular
 
@@ -152,20 +149,15 @@ const CONFIG = {
 };
 ```
 
-**Ventajas**:
-- Fácil modificación de parámetros
-- Código más limpio y legible
-- Escalabilidad para añadir más cuerpos celestes
-
 ### Refactorización con Bucles
 
 ```javascript
-// Antes: ~490 líneas con código repetitivo
+// Antes: 490 líneas con código repetitivo
 CrearPlaneta(0.4, 8, 1.8, 0x8b7355, 1.0, 1.0, txMercurio);
 CrearPlaneta(0.7, 12, 1.5, 0xffc649, 1.0, 1.0, txVenus);
 // ... repetido 6 veces
 
-// Después: ~250 líneas con bucles
+// Después: 250 líneas con bucles
 CONFIG.planetasData.forEach(p => {
   // Creación dinámica de planetas
 });
@@ -173,7 +165,7 @@ CONFIG.planetasData.forEach(p => {
 
 **Reducción**: ~50% menos líneas de código
 
-## 🎮 Controles
+## Controles
 
 | Tecla | Acción |
 |-------|--------|
@@ -190,17 +182,15 @@ CONFIG.planetasData.forEach(p => {
 **Controles de cámara (vistas 0-7)**:
 - **Mouse izquierdo + arrastre**: Rotar
 - **Rueda del mouse**: Zoom
-- **Mouse derecho + arrastre**: Paneo
+- **Mouse derecho + arrastre**: Paneo (en mi opinión, de lo mejor del sistema)
 
-## 📚 Referencias
+## Referencias
 
 ### Texturas de Planetas
 Las texturas utilizadas provienen de recursos de dominio público y educativos:
 
-- **Solar System Scope**: [solarsystemscope.com](https://www.solarsystemscope.com/textures/)
 - **NASA Visible Earth**: Texturas de la Tierra
-- **James Hastings-Trew**: Mapas planetarios en alta resolución
-- **Planetary Pixel Emporium**: Colección de texturas planetarias
+- **[Planetary Pixel Emporium](https://planetpixelemporium.com)**: Colección de texturas planetarias
 
 ### Documentación Técnica
 - [Three.js Documentation](https://threejs.org/docs/) - Documentación oficial
@@ -211,102 +201,30 @@ Las texturas utilizadas provienen de recursos de dominio público y educativos:
 - [gitfrandu4/solar-system-threejs](https://github.com/gitfrandu4/solar-system-threejs) - Sistema solar interactivo
 - [sanderblue/solar-system-threejs](https://sanderblue.github.io/solar-system-threejs/) - Proyecto a escala real
 
-## 🤖 Uso de IA en el Desarrollo
+## Uso de IA en el Desarrollo
 
 Este proyecto ha sido optimizado mediante asistencia de IA para:
 
 ### Refactorización de Código
 - **Consolidación de funciones repetitivas**: Conversión de múltiples llamadas similares a bucles `forEach`
 - **Modularización**: Separación de responsabilidades en funciones específicas
-- **Reducción de líneas**: De ~490 a ~250 líneas (-49%)
+- **Reducción de líneas**: De ~490 a ~250 líneas (-49%) (código principal, sin tener en cuenta decoraciones)
 
 ### Centralización de Configuración
 - **Creación del objeto CONFIG**: Agrupa todos los parámetros en una estructura accesible
 - **Escalabilidad mejorada**: Facilita añadir nuevos planetas/lunas sin modificar lógica
 
 ### Optimizaciones Implementadas
-- **Reutilización de texturas**: Una única carga para múltiples objetos (lunas)
 - **Código DRY**: Eliminación de duplicación mediante abstracciones
-- **Nomenclatura consistente**: Español para variables y funciones
 
 ### Mejoras de Legibilidad
 - **Comentarios estructurados**: Sin comentarios inline excesivos
 - **Nombres descriptivos**: `crearEstrellas()`, `crearCometas()`, etc.
 - **Estructura clara**: Separación visual entre secciones
 
-## 🚀 Instalación y Uso
-
-### Requisitos Previos
-- Node.js (v14 o superior)
-- npm o yarn
-
-### Instalación
-
-```bash
-# Clonar el repositorio (o descargar archivos)
-git clone <tu-repositorio>
-
-# Instalar dependencias
-npm install three
-
-# Estructura de carpetas requerida
-proyecto/
-├── src/
-│   ├── sunmap.jpg
-│   ├── mercurymap.jpg
-│   ├── venusmap.jpg
-│   ├── earthmap1k.jpg
-│   ├── mars_1k_color.jpg
-│   ├── jupiter2_2k.jpg
-│   ├── saturnringcolor.jpg
-│   └── moonmap1k.jpg
-├── main.js
-└── index.html
-```
-
-### Ejecución
-
-```bash
-# Desarrollo con Vite (recomendado)
-npm run dev
-
-# O servir con cualquier servidor HTTP
-python -m http.server 8000
-```
-
-Abre tu navegador en `http://localhost:8000` (o el puerto correspondiente)
-
-## 🎯 Futuras Mejoras
-
-- [ ] Añadir Urano, Neptuno y planetas enanos
-- [ ] Implementar cinturón de asteroides
-- [ ] Sistema de colisiones básico
-- [ ] Control manual de la nave (WASD)
-- [ ] Panel de información de planetas al hacer clic
-- [ ] Efectos de brillo (bloom) para el Sol
-- [ ] Sombras proyectadas entre planetas
-- [ ] Modo de órbitas realistas con datos astronómicos
-- [ ] Sonido ambiente espacial
-
-## 📄 Licencia
-
-Este proyecto es de código abierto y está disponible para uso educativo.
-
-## 👤 Autor
-
-Desarrollado como proyecto educativo de Three.js con asistencia de IA (Perplexity AI) para optimización y refactorización de código.
-
 ***
 
 **Nota**: Este README documenta las características principales del sistema solar interactivo. Para detalles técnicos específicos, consulta los comentarios en el código fuente.
+Desarrollado como proyecto educativo de Three.js, con asistencia de IA (Perplexity AI) para optimización y refactorización de código.
 
-[1](https://www.youtube.com/watch?v=k8YoKLjumic)
-[2](https://gitnation.com/contents/construye-un-sistema-solar-3d-con-reconocimiento-de-manos-y-threejs/es)
-[3](https://www.reddit.com/r/threejs/comments/1msjm2j/i_built_a_fully_interactive_3d_solar_system_using/)
-[4](https://www.youtube.com/watch?v=5Wj3TnktlGc)
-[5](https://github.com/gitfrandu4/solar-system-threejs)
-[6](https://www.youtube.com/watch?v=0IpoCIyUnGA)
-[7](https://translate.google.com/translate?u=https%3A%2F%2Fsanderblue.github.io%2Fsolar-system-threejs%2F&hl=es&sl=en&tl=es&client=srp)
-[8](https://www.youtube.com/playlist?list=PLjcjAqAnHd1EIxV4FSZIiJZvsdrBc1Xho)
-[9](https://www.youtube.com/watch?v=uTZNHODjUnM)
-[10](https://www.reddit.com/r/threejs/comments/1n6txqs/threejs_tutorial_particles_with_tsl/)
+
