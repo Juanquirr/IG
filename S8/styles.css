@@ -52,7 +52,7 @@ body {
 
 button {
   padding: 10px 16px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.548);
   background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
   cursor: pointer;
@@ -65,33 +65,24 @@ button {
 
 button:hover {
   background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(140, 0, 255, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-color: #667eea;
-  color: #ffffff;
+  background: rgba(140, 0, 255, 0.4);
+  border-color: white;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 #switchMapBtn {
   width: 100%;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: darkcyan;
   border: none;
   padding: 12px;
   font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
-}
-
-#switchMapBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.5);
 }
 
 .event-counter {
@@ -103,10 +94,49 @@ button.active {
   font-size: 13px;
   font-weight: 600;
   text-align: center;
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(216, 179, 14, 0.3);
 }
 
-/* Responsive para pantallas pequeñas */
+/* Legend at the bottom */
+#legend {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 24px;
+  background: rgba(15, 15, 30, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 90%;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+/* Responsive for medium screens */
 @media (max-width: 768px) {
   #controls {
     top: 10px;
@@ -123,5 +153,34 @@ button.active {
   button {
     padding: 12px;
     font-size: 14px;
+  }
+
+  #legend {
+    bottom: 10px;
+    padding: 10px 16px;
+    gap: 12px;
+    max-width: 95%;
+  }
+
+  .legend-item {
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Responsive for small screens */
+@media (max-width: 480px) {
+  #legend {
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .legend-item span:last-child {
+    display: none; /* Only show dots on very small screens */
   }
 }

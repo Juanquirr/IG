@@ -7,6 +7,8 @@ let ufoPoints = [];
 let ufoData = [];
 let allUfoData = [];
 
+let pointSizeScale = 0.8;
+
 const dayMapTexture = new THREE.TextureLoader().load(
   "src/8081_earthmap10k.jpg"
 );
@@ -52,6 +54,16 @@ function init() {
   controls.minZoom = 0.3;
   controls.maxZoom = 50;
   controls.zoomSpeed = 1.5;
+
+  const sizeSlider = document.getElementById("sizeSlider");
+  const sizeValue = document.getElementById("sizeValue");
+
+  if (sizeSlider && sizeValue) {
+    sizeSlider.addEventListener("input", () => {
+      pointSizeScale = parseFloat(sizeSlider.value);
+      sizeValue.textContent = `Size: ${pointSizeScale.toFixed(1)}x`;
+    });
+  }
 
   const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
@@ -301,17 +313,14 @@ function createUFOMarkers() {
   const ctx = canvas.getContext("2d");
 
   const gradient1 = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-  gradient1.addColorStop(0, "rgba(255, 0, 0, 1)");
-  gradient1.addColorStop(0.1, "rgba(255, 0, 0, 0.9)");
-  gradient1.addColorStop(0.3, "rgba(255, 0, 0, 0.7)");
-  gradient1.addColorStop(0.6, "rgba(255, 0, 0, 0.4)");
-  gradient1.addColorStop(1, "rgba(255, 0, 0, 0)");
+  gradient1.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+  gradient1.addColorStop(0.4, "rgba(255, 255, 255, 0.4)");
+  gradient1.addColorStop(1, "rgba(255, 255, 255, 0)");
   ctx.fillStyle = gradient1;
   ctx.fillRect(0, 0, 256, 256);
 
   const gradient2 = ctx.createRadialGradient(128, 128, 0, 128, 128, 50);
   gradient2.addColorStop(0, "rgba(255, 255, 255, 1)");
-  gradient2.addColorStop(0.5, "rgba(255, 255, 255, 1)");
   gradient2.addColorStop(1, "rgba(255, 255, 255, 0.9)");
   ctx.fillStyle = gradient2;
   ctx.beginPath();
@@ -349,12 +358,12 @@ function getColorByShape(shape) {
     light: new THREE.Color(0xfff20f),
     circle: new THREE.Color(0x2221ff),
     sphere: new THREE.Color(0x97fffa),
-    disk: new THREE.Color(0x6d00d9),
+    disk: new THREE.Color(0x9700b3),
     triangle: new THREE.Color(0x0aff0b),
     cylinder: new THREE.Color(0xee1000),
     fireball: new THREE.Color(0xff8219),
     formation: new THREE.Color(0xff6ec9),
-    unknown: new THREE.Color(0x004600),
+    unknown: new THREE.Color(0x222233),
   };
   return colors[shape.toLowerCase()] || colors["unknown"];
 }
@@ -396,12 +405,12 @@ function onWindowResize() {
 function animationLoop() {
   requestAnimationFrame(animationLoop);
 
-  if (ufoPoints.length > 0 && ufoData.length < 50000) {
+  if (ufoPoints.length > 0) {
     const time = Date.now() * 0.001;
     const zoomLevel = camera.zoom;
 
     ufoPoints.forEach((pointsObj) => {
-      const baseSize = 0.8 * zoomLevel;
+      const baseSize = pointSizeScale * zoomLevel;
       const scale = 1 + Math.sin(time * 4) * 0.2;
       pointsObj.material.size = baseSize * scale;
       pointsObj.material.opacity = 0.85 + Math.sin(time * 4) * 0.15;
