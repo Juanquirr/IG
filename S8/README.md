@@ -1,6 +1,6 @@
 # Visualización de avistamientos UAP en mapa 2D con Three.js
 
-Este proyecto muestra una visualización interactiva de avistamientos de fenómenos aéreos no identificados (UAP/UFO) sobre un mapamundi en 2D utilizando Three.js. La aplicación permite explorar la distribución espacial y temporal de los avistamientos, filtrar por rangos de fechas y duración del evento, y alternar entre una visión nocturna y diurna del planeta.
+Este proyecto muestra una visualización interactiva de avistamientos de fenómenos aéreos no identificados (UAP/UFO) sobre un mapamundi en 2D utilizando Three.js. La aplicación permite explorar la distribución espacial y temporal de los avistamientos, filtrar por rangos de fechas y duración del evento, y alternar entre una visión nocturna y diurna del planeta. Desarrollada en [CodeSandbox](https://codesandbox.io/p/sandbox/flamboyant-sun-7j3ryk). [Vídeo demostración aquí](https://youtu.be/YWZDCl0n8hU).
 
 ## Descripción general
 
@@ -32,7 +32,7 @@ El usuario puede alternar entre ambas con el botón “Switch Map”, reutilizan
 
 ## Uso del CSV de avistamientos
 
-Los datos de entrada provienen del dataset público de [https://www.kaggle.com/datasets/NUFORC/ufo-sightings](NUFORC) disponible en Kaggle.
+Los datos de entrada provienen del dataset público de [NUFORC](https://www.kaggle.com/datasets/NUFORC/ufo-sightings) disponible en Kaggle.
 
 En concreto, se utiliza el fichero `complete.csv`, que contiene, entre otros, los siguientes campos relevantes:
 
@@ -149,10 +149,21 @@ El HTML [index.html](index.html) define la estructura de la interfaz (panel de c
 
 Este proyecto se apoya en recursos de datos y texturas de acceso abierto:
 
-- Texturas de la Tierra de alta resolución (día y noche) empleadas para el mapa base proceden de colecciones públicas de texturas planetarias.
-- Los datos de avistamientos UAP provienen del dataset NUFORC en Kaggle, que recopila informes ciudadanos de fenómenos aéreos no identificados durante varias décadas.
+- [Texturas de la Tierra de alta resolución (día y noche)](https://www.solarsystemscope.com/textures/) empleadas para el mapa base proceden de colecciones públicas de texturas planetarias.
+- Los datos de avistamientos UAP provienen del dataset [NUFORC](https://www.kaggle.com/datasets/NUFORC/ufo-sightings) en Kaggle, que recopila informes ciudadanos de fenómenos aéreos no identificados durante varias décadas.
 
-El proyecto busca combinar datos abiertos georreferenciados con herramientas de visualización WebGL modernas para explorar patrones espaciales y temporales de forma interactiva.
+## Limitaciones y consideraciones
+
+La visualización presenta algunas limitaciones derivadas tanto del conjunto de datos original como de las decisiones de diseño adoptadas en la interfaz y el renderizado:
+
+- Registros con duración no legible: algunos avistamientos no se muestran cuando se seleccionan filtros de duración distintos de “All”, debido a que el valor de la columna duration (seconds) en el CSV no está en un formato numérico tratable por el código. En esos casos, el registro se descarta a efectos del filtrado por duración y solo aparece si el filtro está en “All”.
+
+- Alta densidad de puntos en rangos temporales amplios: al seleccionar rangos de fechas muy amplios, especialmente “All” o “2000+”, el número de avistamientos simultáneamente visibles puede ser tan alto que los puntos se solapan de forma intensa. En estas condiciones, incluso haciendo zoom, algunos eventos individuales pueden resultar difíciles de distinguir, ya que la zona se percibe como una masa continua de luz. Por ello, se tuvo que implementar el poder variar el tamaño.
+
+- Desenfoque al combinar zoom elevado y puntos grandes: si se aplica un zoom muy alto sin reducir previamente el tamaño de los puntos mediante el control de “Point Size”, los marcadores pueden apreciarse con efecto de desenfoque. Esto se debe a la combinación del glow de la textura y del blending aditivo cuando el tamaño en pantalla de cada punto es muy grande.
+
+- Pérdida de calidad en la textura nocturna con zoom extremo: aunque la versión nocturna del mapa utiliza una textura de alta resolución (8K), al realizar un zoom excesivo sobre regiones concretas pueden apreciarse píxeles visibles y cierta pérdida de definición. Esto es una limitación inherente a la resolución de la textura de base y al nivel de ampliación que permite la cámara.
+
 
 ## Conclusión
 
