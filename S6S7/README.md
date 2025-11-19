@@ -4,14 +4,14 @@
 
 - Juan Carlos Rodríguez Ramírez
 
-## Descripción
+## Descripción general
 
 Este proyecto es una simulación interactiva del Sistema Solar desarrollada con **Three.js**, una biblioteca de JavaScript para crear gráficos 3D en el navegador. El sistema incluye el Sol, seis planetas principales (Mercurio, Venus, Tierra, Marte, Júpiter y Saturno), tres lunas orbitales, una nave espacial y efectos visuales espaciales como estrellas y cometas. 
 **Disclaimer**: no se pretende representar el Sistema Solar tal cual es. Puede verse un vídeo demostración haciendo click [aquí](https://youtu.be/dPjmjqterL0).
 
-## Características Principales
+## Características principales
 
-### Creación de Planetas y sus Lunas
+### Creación de planetas y sus lunas
 
 El sistema implementa un enfoque modular para la creación de cuerpos celestes:
 
@@ -31,40 +31,40 @@ El sistema implementa un enfoque modular para la creación de cuerpos celestes:
 - **Ángulos de inclinación**: Configurables mediante el parámetro `angle` en `CONFIG.lunasData`
 - **Tres lunas implementadas**: Vinculadas a los planetas Tierra, Marte y Júpiter
 
-### Sistema de Vistas Múltiples
+### Sistema de vistas múltiples
 
 El proyecto implementa tres tipos de cámara con controles únicos:
 
-#### Vista General (Tecla 0)
+#### Vista general (Tecla 0)
 - **Cámara**: `PerspectiveCamera` con FOV 60°
 - **Controles**: `OrbitControls` habilitados para rotación libre, zoom y paneo
 - **Posición inicial**: (0, 80, 80) - Vista diagonal elevada del sistema completo
 - **Objetivo**: Centro del sistema solar (0, 0, 0)
 
-#### Vista de Planetas (Teclas 1-7)
+#### Vista de planetas (Teclas 1-7)
 - **Cámara dinámica**: Se actualiza en cada frame para seguir al planeta seleccionado
 - **Controles**: `OrbitControls` con target que se mueve con el planeta
 - **Posicionamiento**: La cámara se sitúa a una distancia proporcional al radio del planeta (4x)
 - **Offset**: Elevación de 0.5x la distancia para mejor perspectiva
 - **Funcionalidad**: Permite hacer zoom y rotar alrededor del planeta mientras este orbita, dando la sensación de cámara con autoapuntado
 
-#### Vista de Nave (Tecla V)
+#### Vista de nave (Tecla V)
 - **Cámara en tercera persona**: FOV 75° para mayor inmersión
 - **Posición relativa**: Offset (0, 2, -5) respecto a la orientación de la nave
 - **LookAt dinámico**: La cámara mira hacia adelante de la nave usando quaternions. Así, la cámara siempre mira en la dirección de la nave 
 - **Sin controles manuales**: La vista sigue automáticamente a la nave
 
-### Uso de Texturas
+### Uso de texturas
 
 El proyecto utiliza texturas realistas para todos los cuerpos celestes:
 
-#### Carga de Texturas
+#### Carga de texturas
 ```javascript
 const loader = new THREE.TextureLoader();
 map: loader.load(`src/${p.texture}`)
 ```
 
-#### Texturas Implementadas
+#### Texturas implementadas
 - **Sol**: `sunmap.jpg` - Superficie solar con manchas solares
 - **Mercurio**: `mercurymap.jpg` - Superficie craterizada
 - **Venus**: `venusmap.jpg` - Atmósfera densa amarillenta
@@ -78,16 +78,16 @@ map: loader.load(`src/${p.texture}`)
 - **Carga única**: Las texturas se cargan una sola vez y se reutilizan cuando es posible (ej: todas las lunas usan la misma textura)
 - **Resolución apropiada**: Texturas 1k-2k para balance entre calidad y rendimiento
 
-### Decoración del Sistema
+### Decoración del sistema
 
-#### Campo de Estrellas
+#### Campo de estrellas
 - **Cantidad**: 5000 partículas distribuidas aleatoriamente
 - **Volumen**: Esfera de 2000 unidades de radio
 - **Tamaños variables**: Entre 0.5 y 2.5 unidades para simular profundidad
 - **Material**: `PointsMaterial` con opacidad 0.8 y color blanco
 - **Implementación**: `BufferGeometry` con atributos personalizados de posición y tamaño
 
-#### Cometas Animados
+#### Cometas animados
 - **Cantidad**: 3 cometas con órbitas aleatorias
 - **Núcleo**: Esfera pequeña (0.3 radio) con material emisivo azul-blanco
 - **Cola de partículas**: 50 puntos con degradado de opacidad
@@ -95,7 +95,7 @@ map: loader.load(`src/${p.texture}`)
 - **Animación**: Movimiento orbital con variación sinusoidal de distancia
 - **Orientación**: Los cometas apuntan siempre hacia el centro del sistema
 
-#### Nave Espacial Detallada
+#### Nave espacial detallada
 - **Cuerpo principal**: Cilindro de 2.0 unidades con material metálico brillante (shininess: 50)
 - **Cabina transparente**: Semi-esfera azul con opacidad 0.6 y alto brillo
 - **Punta cónica**: Cono rojo con emisividad para efecto de navegación
@@ -104,15 +104,15 @@ map: loader.load(`src/${p.texture}`)
 - **Iluminación**: `PointLight` frontal para simular luces de navegación
 - **Órbita**: Circular a 70 unidades del Sol con altura constante
 
-## Tecnologías Utilizadas
+## Tecnologías utilizadas
 
 - **Three.js**: Biblioteca principal para renderizado 3D (WebGL)
 - **JavaScript ES6+**: Sintaxis moderna con módulos
 - **HTML5 Canvas**: Elemento de renderizado
 
-## Estructura del Código
+## Estructura del código
 
-### Organización Modular
+### Organización modular
 
 El código está estructurado en funciones especializadas para facilitar mantenimiento:
 
@@ -149,7 +149,7 @@ const CONFIG = {
 };
 ```
 
-### Refactorización con Bucles
+### Refactorización con bucles
 
 ```javascript
 // Antes: 490 líneas con código repetitivo
@@ -186,38 +186,38 @@ CONFIG.planetasData.forEach(p => {
 
 ## Referencias
 
-### Texturas de Planetas
+### Texturas de planetas
 Las texturas utilizadas provienen de recursos de dominio público y educativos:
 
 - **NASA Visible Earth**: Texturas de la Tierra
 - **[Planetary Pixel Emporium](https://planetpixelemporium.com)**: Colección de texturas planetarias
 
-### Documentación Técnica
+### Documentación técnica
 - [Three.js Documentation](https://threejs.org/docs/) - Documentación oficial
 - [Three.js Examples](https://threejs.org/examples/) - Ejemplos oficiales
 - [Three.js Journey](https://threejs-journey.com/) - Curso completo de Three.js
 
-### Repositorios Similares
+### Repositorios similares
 - [gitfrandu4/solar-system-threejs](https://github.com/gitfrandu4/solar-system-threejs) - Sistema solar interactivo
 - [sanderblue/solar-system-threejs](https://sanderblue.github.io/solar-system-threejs/) - Proyecto a escala real
 
-## Uso de IA en el Desarrollo
+## Uso de IA en el desarrollo
 
 Este proyecto ha sido optimizado mediante asistencia de IA para:
 
-### Refactorización de Código
+### Refactorización de código
 - **Consolidación de funciones repetitivas**: Conversión de múltiples llamadas similares a bucles `forEach`
 - **Modularización**: Separación de responsabilidades en funciones específicas
 - **Reducción de líneas**: De ~490 a ~250 líneas (-49%) (código principal, sin tener en cuenta decoraciones)
 
-### Centralización de Configuración
+### Centralización de configuración
 - **Creación del objeto CONFIG**: Agrupa todos los parámetros en una estructura accesible
 - **Escalabilidad mejorada**: Facilita añadir nuevos planetas/lunas sin modificar lógica
 
-### Optimizaciones Implementadas
+### Optimizaciones implementadas
 - **Código DRY**: Eliminación de duplicación mediante abstracciones
 
-### Mejoras de Legibilidad
+### Mejoras de legibilidad
 - **Comentarios estructurados**: Sin comentarios inline excesivos
 - **Nombres descriptivos**: `crearEstrellas()`, `crearCometas()`, etc.
 - **Estructura clara**: Separación visual entre secciones
