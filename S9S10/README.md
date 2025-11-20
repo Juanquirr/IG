@@ -44,5 +44,9 @@ Podría haberme quedado ahí, pero no me sentía del todo satisfecho: ni siquier
 
 El fichero [pompas_malabares_original](S9S10/pompas_malabares_original.frag) puede considerarse mi shader “definitivo”, aunque después le hice algunos retoques de tamaño, movimiento y colores para que se pareciera más a bolas que a pompas. Esta ha sido, en resumen, mi hoja de ruta y el proceso de pensamiento durante el desarrollo de la práctica.
 
+## Resultado
+
+<img src="./malabares_pompas_colores.gif" alt="demo" width="600" />
+
 ## Uso de IA
 Para ayuda con la exploración de ideas y el desarrollo de estas para comprobar su viabilidad, se ha empleado **ChatGPT 5.1**. 
